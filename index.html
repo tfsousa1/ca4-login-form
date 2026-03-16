@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tamires Ferreira de Sousa | 76192 | BSC20925B | CA4 Login Form</title>
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+  />
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background-color: #f4f4f4;
+      min-height: 100vh;
+    }
+
+    section {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 460px;
+      background-color: #fff;
+      padding: 32px;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    }
+
+    h1 {
+      text-align: center;
+      color: #222;
+      margin-bottom: 24px;
+      font-size: 2rem;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+      color: #222;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #bbb;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #222;
+    }
+
+    .error-message {
+      color: #c62828;
+      font-size: 0.9rem;
+      margin-top: 6px;
+      display: none;
+    }
+
+    button {
+      width: 100%;
+      border: none;
+      background-color: #222;
+      color: #fff;
+      padding: 14px;
+      font-size: 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s ease;
+      margin-top: 8px;
+    }
+
+    button:hover {
+      background-color: #000;
+    }
+
+    button i {
+      margin-right: 8px;
+    }
+
+    .success-message {
+      display: none;
+      text-align: center;
+      color: #1b5e20;
+      font-size: 1.1rem;
+      font-weight: bold;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+  <section>
+    <div class="container">
+      <form id="login-form" novalidate>
+        <h1>Student Login Form</h1>
+
+        <div class="form-group">
+          <label for="first-name">First Name</label>
+          <input type="text" id="first-name" />
+          <p class="error-message" id="first-name-error">Please enter your first name.</p>
+        </div>
+
+        <div class="form-group">
+          <label for="last-name">Last Name</label>
+          <input type="text" id="last-name" />
+          <p class="error-message" id="last-name-error">Please enter your last name.</p>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" />
+          <p class="error-message" id="email-error">Please enter a valid email address.</p>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" />
+          <p class="error-message" id="password-error">Password must be at least 8 characters long.</p>
+        </div>
+
+        <div class="form-group">
+          <label for="student-id">Student ID</label>
+          <input type="text" id="student-id" />
+          <p class="error-message" id="student-id-error">Student ID must contain numbers only.</p>
+        </div>
+
+        <button type="submit">
+          <i class="fa-solid fa-right-to-bracket"></i>
+          Submit
+        </button>
+      </form>
+
+      <div class="success-message" id="success-message">
+        Login form submitted successfully.<br />
+        Welcome, student.
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Select form elements
+    const loginForm = document.getElementById("login-form");
+    const successMessage = document.getElementById("success-message");
+
+    const firstNameInput = document.getElementById("first-name");
+    const lastNameInput = document.getElementById("last-name");
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
+    const studentIdInput = document.getElementById("student-id");
+
+    const firstNameError = document.getElementById("first-name-error");
+    const lastNameError = document.getElementById("last-name-error");
+    const emailError = document.getElementById("email-error");
+    const passwordError = document.getElementById("password-error");
+    const studentIdError = document.getElementById("student-id-error");
+
+    // Show error message
+    function showError(errorElement) {
+      errorElement.style.display = "block";
+    }
+
+    // Hide error message
+    function hideError(errorElement) {
+      errorElement.style.display = "none";
+    }
+
+    // Check if email format is valid
+    function isValidEmail(email) {
+      return email.includes("@") && email.includes(".");
+    }
+
+    // Check if student ID contains numbers only
+    function isNumeric(value) {
+      return /^\d+$/.test(value);
+    }
+
+    // Validate form when submitted
+    loginForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      let isFormValid = true;
+
+      // First name validation
+      if (firstNameInput.value.trim() === "") {
+        showError(firstNameError);
+        isFormValid = false;
+      } else {
+        hideError(firstNameError);
+      }
+
+      // Last name validation
+      if (lastNameInput.value.trim() === "") {
+        showError(lastNameError);
+        isFormValid = false;
+      } else {
+        hideError(lastNameError);
+      }
+
+      // Email validation
+      if (emailInput.value.trim() === "" || !isValidEmail(emailInput.value.trim())) {
+        showError(emailError);
+        isFormValid = false;
+      } else {
+        hideError(emailError);
+      }
+
+      // Password validation
+      if (passwordInput.value.trim().length < 8) {
+        showError(passwordError);
+        isFormValid = false;
+      } else {
+        hideError(passwordError);
+      }
+
+      // Student ID validation
+      if (studentIdInput.value.trim() === "" || !isNumeric(studentIdInput.value.trim())) {
+        showError(studentIdError);
+        isFormValid = false;
+      } else {
+        hideError(studentIdError);
+      }
+
+      // If the form is valid, clear fields and show success message
+      if (isFormValid) {
+        loginForm.reset();
+
+        hideError(firstNameError);
+        hideError(lastNameError);
+        hideError(emailError);
+        hideError(passwordError);
+        hideError(studentIdError);
+
+        loginForm.style.display = "none";
+        successMessage.style.display = "block";
+      }
+    });
+  </script>
+</body>
+</html>
